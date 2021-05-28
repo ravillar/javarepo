@@ -2,18 +2,18 @@ import java.util.*;
 
 public class Ej_03{
     public static void main(String[] args) {
-        List<Integer> baraja= new ArrayList<Integer>();
+        List<String> baraja= new ArrayList<String>();
 
-        baraja.add(1);
-        baraja.add(2);
-        baraja.add(3);
-        baraja.add(4);
-        baraja.add(5);
-        baraja.add(6);
-        baraja.add(7);
-        baraja.add(10);
-        baraja.add(11);
-        baraja.add(12);
+        baraja.add("A");
+        baraja.add("2");
+        baraja.add("3");
+        baraja.add("4");
+        baraja.add("5");
+        baraja.add("6");
+        baraja.add("7");
+        baraja.add("J");
+        baraja.add("Q");
+        baraja.add("K");
         
         System.out.println("\nOrden ascendente... ");
         printbaraja(baraja);
