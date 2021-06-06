@@ -1,14 +1,16 @@
 import java.util.*;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.stream.Collectors;
 public class Ej_05 {
 
     public static void main(String[] args) {
 
-        ArrayList<Empleado> listaEmpleados = leerArchivo();
+        List<Empleado> listaEmpleados = leerArchivo();
 
         if(listaEmpleados != null){
+
+            Scanner sc = new Scanner(System.in);
 
             System.out.println("\nLista de empleados sin ordenar\n");
             imprimirLista( listaEmpleados );
@@ -29,31 +31,39 @@ public class Ej_05 {
             System.out.printf("%n%s %s es el empleado con el sueldo más alto $ %.2f.%n"
                     , mayorSueldo.getNombre(), mayorSueldo.getApellido(), mayorSueldo.getSueldo());
 
-            separador();
-
+            separador(sc);
             System.out.println("\nEmpleados ordenados alfabéticamente por Nombre Ascendente\n");
             listaEmpleados.sort((e1, e2) -> e1.getNombre().compareTo(e2.getNombre())); 
             imprimirLista( listaEmpleados );
 
-            separador();
-
+            separador(sc);
             System.out.println("\nEmpleados ordenados alfabéticamente por Apellido Descendente\n");
             Comparator<Empleado> comparador = (e1, e2) -> e1.getApellido().compareTo(e2.getApellido());
             listaEmpleados.sort(comparador.reversed()); 
             imprimirLista( listaEmpleados );
+
+            separador(sc);
+            System.out.println("\nEmpleados con letra R inicial en Apellido\n");
+            List<Empleado> filtrados = listaEmpleados
+                .stream()
+                .sorted( (e1, e2) -> e1.getApellido().compareTo( e2.getApellido() ) )
+                .filter( e -> e.getApellido().toLowerCase().startsWith("r") ).collect( Collectors.toList() );
+
+            imprimirLista( filtrados );
+
+            sc.close();
         }
 
     }
 
-    public static ArrayList<Empleado> leerArchivo() {
+    public static List<Empleado> leerArchivo() {
         System.out.println("Leyendo archivo datos.txt ...");
-
         try{
 
             File archivo = new File("datos.txt");
             Scanner lector = new Scanner(archivo);
 
-            ArrayList<Empleado> empleados = new ArrayList<>();
+            List<Empleado> empleados = new ArrayList<>();
 
             while (lector.hasNextLine()) {
                 String linea = lector.nextLine();
@@ -62,17 +72,15 @@ public class Ej_05 {
 
             lector.close();
             return empleados;
-
         }catch(IOException e){
 
             System.out.println("Error al intentar leer el archivo");
             e.printStackTrace();
             return null;
-
         }
     }
 
-    public static void imprimirLista(ArrayList<Empleado> lista) {
+    public static void imprimirLista(List<Empleado> lista) {
         String formato = "%-12.12s  %-12.12s  %-12.12s  %-6.6s %-12.12s%n";
         System.out.printf(formato, "Nombre", "Apellido", "Fecha Nac.", "Edad", "Sueldo");
         for(Empleado e : lista){
@@ -80,12 +88,9 @@ public class Ej_05 {
         }
     }
 
-    public static void separador(){
-        Scanner scan = new Scanner(System.in);
+    public static void separador(Scanner scan){
         System.out.print("\nPresione ENTER para continuar: ");
-        scan.nextLine();
-
-        System.out.println("-".repeat(70));
+            scan.nextLine();
     }
     
     // crea una instancia de empleado a partir de un string 
@@ -94,27 +99,27 @@ public class Ej_05 {
         return new Empleado(campos[0], campos[1], campos[2], Double.parseDouble(campos[3]) ); 
     }
 
-    public static Empleado empleadoMasJoven(ArrayList<Empleado> lista) {
+    public static Empleado empleadoMasJoven(List<Empleado> lista) {
         return lista
             .stream()
             .min(Comparator.comparing(Empleado::calcularEdad))
             .orElseThrow(NoSuchElementException::new);
     }
 
-    public static Empleado empleadoMayor(ArrayList<Empleado> lista) {
+    public static Empleado empleadoMayor(List<Empleado> lista) {
         return lista
             .stream()
             .max(Comparator.comparing(Empleado::calcularEdad))
             .orElseThrow(NoSuchElementException::new);
     }
-    public static Empleado empleadoMayorSueldo(ArrayList<Empleado> lista) {
+    public static Empleado empleadoMayorSueldo(List<Empleado> lista) {
         return lista
             .stream()
             .max(Comparator.comparing(Empleado::getSueldo))
             .orElseThrow(NoSuchElementException::new);
     }
 
-    public static Empleado empleadoMenorSueldo(ArrayList<Empleado> lista) {
+    public static Empleado empleadoMenorSueldo(List<Empleado> lista) {
         return lista
             .stream()
             .min(Comparator.comparing(Empleado::getSueldo))

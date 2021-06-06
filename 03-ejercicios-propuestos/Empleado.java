@@ -27,31 +27,21 @@ public class Empleado {
     }
 
     public int calcularEdad() {
-
         return Period.between(this.fechaNac, LocalDate.now()).getYears();
-
     }
 
     public String getNombre() {
-
         return this.nombre; 
-
     }
 
     public String  getApellido() {
-
         return this.apellido;
-
     }
     public Double getSueldo() {
-
         return this.sueldo; 
-
     }
     public String getFechaNac() {
-
         return this.fechaNac.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")); 
-
     }
 
 }
