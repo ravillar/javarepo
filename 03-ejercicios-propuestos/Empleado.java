@@ -37,9 +37,11 @@ public class Empleado {
     public String  getApellido() {
         return this.apellido;
     }
+
     public Double getSueldo() {
         return this.sueldo; 
     }
+
     public String getFechaNac() {
         return this.fechaNac.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")); 
     }

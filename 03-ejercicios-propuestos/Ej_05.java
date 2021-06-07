@@ -103,26 +103,26 @@ public class Ej_05 {
         return lista
             .stream()
             .min(Comparator.comparing(Empleado::calcularEdad))
-            .orElseThrow(NoSuchElementException::new);
+            .get();
     }
 
     public static Empleado empleadoMayor(List<Empleado> lista) {
         return lista
             .stream()
             .max(Comparator.comparing(Empleado::calcularEdad))
-            .orElseThrow(NoSuchElementException::new);
+            .get();
     }
     public static Empleado empleadoMayorSueldo(List<Empleado> lista) {
         return lista
             .stream()
             .max(Comparator.comparing(Empleado::getSueldo))
-            .orElseThrow(NoSuchElementException::new);
+            .get();
     }
 
     public static Empleado empleadoMenorSueldo(List<Empleado> lista) {
         return lista
             .stream()
             .min(Comparator.comparing(Empleado::getSueldo))
-            .orElseThrow(NoSuchElementException::new);
+            .get();
     }
 }
